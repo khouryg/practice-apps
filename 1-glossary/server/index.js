@@ -1,11 +1,13 @@
 require("dotenv").config();
 const express = require("express");
 const path = require("path");
+const cors = require('cors')
 const {definition} = require("./db.js");
 
-let port = process.env.PORT || 3001;
+let port = process.env.PORT || 3003;
 
 const app = express();
+app.use(cors())
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "../client/dist")));
 
@@ -16,11 +18,8 @@ app.post('/words', (req, res) => {
     .then((data) => {
       res.json(data);
     })
+    .catch((err) => err)
   })
-
-  // .catch((error) => {
-  //   throw new Error ('There was an error writing to db', error);
-  // })
 });
 
 app.get('/words', (req, res) => {
@@ -28,6 +27,13 @@ app.get('/words', (req, res) => {
   .then((data) => {
     res.json(data);
   })
+})
+
+// how do i get this to to just be '/words/*' and accept a query term
+app.delete('/words/del', (req, res) => {
+  console.log('this is the body of the req', req.body);
+  definition.findOneAndDelete(req.body)
+  .then(res.end());
 })
 
 

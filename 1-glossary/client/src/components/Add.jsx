@@ -1,7 +1,5 @@
 import React from "react";
 
-
-
 const Add = function ({postWord, getWord}) {
 
   const handleClick = function() {

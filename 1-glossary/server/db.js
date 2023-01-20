@@ -6,7 +6,7 @@ mongoose.connect('mongodb://localhost:27017/glossary', () => {
 });
 // 2. Set up any schema and models needed by the app
 const defSchema = new mongoose.Schema({
-  word: {type: String, unique:true},
+  word: String,
   definition: String
 })
 
