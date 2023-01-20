@@ -1,19 +1,35 @@
 require("dotenv").config();
 const express = require("express");
 const path = require("path");
+const {definition} = require("./db.js");
+
+let port = process.env.PORT || 3001;
 
 const app = express();
-
-// Serves up all static and generated assets in ../client/dist.
+app.use(express.json());
 app.use(express.static(path.join(__dirname, "../client/dist")));
 
-/**** 
- * 
- * 
- * Other routes here....
- *
- * 
- */
+app.post('/words', (req, res) => {
+  definition.create(req.body)
+  .then(() => {
+    definition.find()
+    .then((data) => {
+      res.json(data);
+    })
+  })
 
-app.listen(process.env.PORT);
-console.log(`Listening at http://localhost:${process.env.PORT}`);
+  // .catch((error) => {
+  //   throw new Error ('There was an error writing to db', error);
+  // })
+});
+
+app.get('/words', (req, res) => {
+  definition.find().exec()
+  .then((data) => {
+    res.json(data);
+  })
+})
+
+
+app.listen(port);
+console.log(`Listening at http://localhost:${port}`);
