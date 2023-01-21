@@ -12,7 +12,27 @@ const defSchema = new mongoose.Schema({
 
 const definition = mongoose.model('Definition', defSchema);
 
+const model = {
+  save(word) {
+    return definition.create(word)
+  },
+
+  delete(id) {
+    return definition.findOneAndDelete(id)
+  },
+
+  update (id, def) {
+    return definition.findOneAndUpdate({'_id':id}, {'definition': def})
+  },
+
+  getAll() {
+    return definition.find();
+  }
+
+}
+
+
 // 3. Export the models
-module.exports.definition = definition;
+module.exports.model = model;
 
 // 4. Import the models into any modules that need them

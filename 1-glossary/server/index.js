@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const cors = require('cors')
-const {definition} = require("./db.js");
+const {model} = require("./db.js");
 
 let port = process.env.PORT || 3003;
 
@@ -12,28 +12,28 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "../client/dist")));
 
 app.post('/words', (req, res) => {
-  definition.create(req.body)
-  .then(() => {
-    definition.find()
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((err) => err)
-  })
+  model.save(req.body)
+  .then(res.end())
+  .catch((err) => console.log(err))
 });
 
 app.get('/words', (req, res) => {
-  definition.find().exec()
+  model.getAll()
   .then((data) => {
     res.json(data);
   })
 })
 
 // how do i get this to to just be '/words/*' and accept a query term
-app.delete('/words/del', (req, res) => {
-  console.log('this is the body of the req', req.body);
-  definition.findOneAndDelete(req.body)
+app.delete('/words', (req, res) => {
+  model.delete(req.body)
   .then(res.end());
+})
+
+app.patch('/words', (req, res) => {
+  model.update(req.body._id, req.body.definition)
+  .catch(err => {console.log(err)})
+  res.end('hellow there');
 })
 
 

@@ -74,10 +74,18 @@ main {
 }
 
 #delete-button {
+  float: right;
+  display:inline;
+  margin-left: 5px;
+}
+
+#edit-button,
+#save-button {
+  float: right;
   display:inline;
 }
 
-#edit-button {
-  display:inline;
+.edit-field {
+  min-width: 400px;
 }
 

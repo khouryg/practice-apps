@@ -1,26 +1,15 @@
-import React from "react"
+import React,{useState} from "react";
+import ListChild from './ListChild.jsx';
 
-const List = function ({words, delWord, getWord}) {
+const List = function ({words, delWord, search, getWord, updateWord}) {
 
 
-
-  const handleClick = function (e) {
-    delWord(e.target.value)
-    .then(() => {
-      getWord();
-    })
-  }
 
   return (
-    words.map((x) => (
-      <div>
-        <li>{x.word}</li>
-          <ol>
-            <li>{x.definition}</li>
-          </ol>
-        <button id='delete-button' value={x._id} onClick={handleClick}>delete</button>
-        <button id='edit-button'>edit</button>
-      </div>
+    words.filter((x) => (x.word.toLowerCase().includes(search.toLowerCase())))
+    .reverse()
+    .map((x) => (
+        <ListChild x={x} delWord={delWord} getWord={getWord} updateWord={updateWord}/>
       )
     )
   )

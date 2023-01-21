@@ -16,7 +16,7 @@ const Add = function ({postWord, getWord}) {
 
   return (
     <div>
-      <h2>Add word</h2>
+      <h3>Add word</h3>
       <input type='text' id='add-word' placeholder='Add word'></input>
       <input type='text' id='add-def' placeholder='Definition'></input>
       <button id='click-button' onClick={handleClick}>Click meh</button>
