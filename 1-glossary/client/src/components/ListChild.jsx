@@ -3,7 +3,7 @@ import React,{useState} from 'react';
 const ListChild = function ({x, delWord, getWord, updateWord}) {
 
   const [showInput, setShowInput] = useState(false);
-  const [editInput, setEditInput] = useState('');
+  const [editInput, setEditInput] = useState();
 
   const handleDelete = function (e) {
     delWord(e.target.value)
